@@ -31,8 +31,8 @@ locals {
         {
             name                      = "primary-node-pool"
             machine_type              = "e2-medium"
-            min_count                 = 1
-            max_count                 = 2
+            min_count                 = 0
+            max_count                 = 1
             local_ssd_count           = 0
             disk_size_gb              = 40
             disk_type                 = "pd-standard"
