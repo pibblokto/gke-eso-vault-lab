@@ -1,0 +1,43 @@
+# Dockerfile
+
+FROM ubuntu:20.04
+
+# Avoid some UI frontend dialogs during package installations
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 1. Install prerequisites
+RUN apt-get update && apt-get install -y \
+    apt-transport-https \
+    gnupg \
+    software-properties-common \
+    curl
+
+# 2. Install Terraform (via HashiCorp's official repository)
+RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com focal main" \
+    > /etc/apt/sources.list.d/hashicorp.list \
+    && apt-get update && apt-get install -y terraform
+
+# 3. Install kubectl (download binary instead of using APT)
+RUN curl -LO "https://dl.k8s.io/release/$(curl -sL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+    && chmod +x kubectl \
+    && mv kubectl /usr/local/bin/
+
+# 4. Install Google Cloud SDK (includes gcloud)
+RUN curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" \
+    > /etc/apt/sources.list.d/google-cloud-sdk.list \
+    && apt-get update && apt-get install -y google-cloud-sdk
+
+# 5. Install GKE authentication plugin (fix: use APT instead of gcloud components)
+RUN apt-get update && apt-get install -y google-cloud-cli-gke-gcloud-auth-plugin
+
+# 6. Install Helm (via the official script)
+RUN curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+# 7. Clean up (optional to reduce image size)
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# 8. Set working directory and create .sh script for cluster authentication
+WORKDIR /app
+CMD ["/bin/bash"]
