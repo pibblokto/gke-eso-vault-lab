@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     apt-transport-https \
     gnupg \
     software-properties-common \
-    curl
+    curl \
+    dos2unix
 
 # 2. Install Terraform (via HashiCorp's official repository)
 RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg \
