@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-reader-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault-reader-app
+  template:
+    metadata:
+      labels:
+        app: vault-reader-app
+    spec:
+      containers:
+      - name: vault-reader-app
+        image: {{ printf "%s:%s" .Values.repository .Values.tag }}
+        imagePullPolicy: Always   
+        ports:
+        - containerPort: {{ .Values.port }}
+        volumeMounts:
+        - name: creds
+          mountPath: "/secrets"
+          readOnly: true      
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: {{ .Values.port }}
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: {{ .Values.port }}
+      volumes:
+      - name: creds
+        secret:
+          secretName: db-creds-secret
