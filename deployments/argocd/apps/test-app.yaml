@@ -7,18 +7,18 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/anveshmuppeda/argo-cd-demo
-    targetRevision: HEAD
-    path: development
+    repoURL: https://github.com/pibblokto/gke-eso-vault-lab
+    targetRevision: argocd
+    path: deployments/argocd/deployables/manifests/
 
   destination: 
     server: https://kubernetes.default.svc
-    namespace: argocd-demo
+    namespace: rabbitmq-2-13-2025
 
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
 
     automated:
-      selfHeal: true
+      selfHeal: false
       prune: true
