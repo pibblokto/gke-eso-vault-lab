@@ -44,9 +44,14 @@ RUN curl -fsSL "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" -o go.tar.
 # Set Go environment variables
 ENV PATH="/usr/local/go/bin:$PATH"
 
-# 8. Clean up (optional to reduce image size)
+# 8. Install ArgoCD CLI
+RUN curl -sSL -o argocd "https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64" \
+    && chmod +x argocd \
+    && mv argocd /usr/local/bin/argocd
+
+# 9. Clean up (optional to reduce image size)
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# 9. Set working directory and create .sh script for cluster authentication
+# 10. Set working directory and create .sh script for cluster authentication
 WORKDIR /app
 CMD ["/bin/bash"]
