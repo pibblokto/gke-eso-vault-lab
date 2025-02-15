@@ -17,7 +17,9 @@ spec:
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
-
+    - Prune=true
+  
+  revisionHistoryLimit: 2
     #automated:
     #  selfHeal: true
     #  prune: true
