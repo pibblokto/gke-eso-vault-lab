@@ -4,7 +4,7 @@ metadata:
   name: first-argocd-demo-app
   namespace: argocd
 spec:
-  project: default
+  project: demo-proj-declarative
   source:
     repoURL: https://github.com/pibblokto/gke-eso-vault-lab
     targetRevision: argocd

@@ -73,18 +73,18 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rabbitmq-clone
+  name: rabbitmq-clone-changed
   labels:
-    app: rabbitmq-clone
+    app: rabbitmq-clone-changed
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rabbitmq-clone
+      app: rabbitmq-clone-changed
   template:
     metadata:
       labels:
-        app: rabbitmq-clone
+        app: rabbitmq-clone-changed
     spec:
       containers:
         - name: rabbitmq
