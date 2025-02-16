@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: first-argocd-demo-app
+  namespace: argocd
+spec:
+  project: demo-proj-declarative
+  source:
+    repoURL: https://github.com/pibblokto/gke-eso-vault-lab
+    targetRevision: argocd
+    path: deployments/argocd/deployables/manifests/
+
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: rabbitmq-2-13-2025
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    - Prune=true
+  
+  revisionHistoryLimit: 2
+    #automated:
+    #  selfHeal: true
+    #  prune: true

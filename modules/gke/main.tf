@@ -14,6 +14,7 @@ module "gke" {
   filestore_csi_driver       = false
   enable_private_endpoint    = false
   enable_private_nodes       = true
+  deletion_protection        = false
 
   node_pools = local.node_pools
 

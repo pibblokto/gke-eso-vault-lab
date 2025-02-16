@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: demo-proj-declarative
+  namespace: argocd
+spec:
+  description: "A sample demo project"
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - server: 'https://kubernetes.default.svc'
+    namespace: '*'
+  sourceRepos:
+  - '*'
