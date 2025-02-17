@@ -5,6 +5,7 @@ resource "helm_release" "this" {
   chart            = local.chart
   version          = local.chart_version != "" ? local.chart_version : null
   create_namespace = true
+  values           = local.values_file
 
   dynamic "set" {
     for_each = local.values
