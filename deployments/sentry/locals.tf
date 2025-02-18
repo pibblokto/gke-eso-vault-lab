@@ -1,15 +1,15 @@
 locals {
     repository    = "https://sentry-kubernetes.github.io/charts"
-    release_name  = "cnpg"
-    namespace     = "cnpg-system"
-    chart         = "cloudnative-pg"
-    chart_version = "0.23.0"
+    release_name  = "sentry"
+    namespace     = "sentry"
+    chart         = "sentry"
+    chart_version = "26.14.1"
     values        = []
     values_file   = [<<EOF
 user:
   create: true
-  email: youremail@example.com
-  password: admin
+  email: ""
+  password: ""
 
 ingress:
   enabled: true
@@ -19,43 +19,31 @@ ingress:
   # If you are using nginx ingress controller, please use at least those 2 annotations
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
-  
-  hostname: sentry.example.com
+    cert-manager.io/cluster-issuer: le-cluster-issuer
+
+  hostname: sentry.mukinabaht.com
 
 sentry:
   singleOrganization: false
   worker:
-    replicas: 2
-mail:
-  backend: smtp
-  useTls: false
-  username: "apikey"
-  password: "XXXXX"
-  port: 25
-  host: "smtp.sendgrid.net"
-  from: "sentry@example.com"
+    replicas: 1
 
 service:
   name: sentry
   type: ClusterIP
   externalPort: 9000
   annotations: {}
-slack: 
-  clientId: "client-it"
-  clientSecret: "cleint-secret"
-  signingSecret: "signing-secret"
-# Reference -> https://develop.sentry.dev/integrations/slack/
 
 postgresql:
   enabled: false
 ## This value is only used when postgresql.enabled is set to false
 ##
 externalPostgresql:
-  host: database-host
+  host: pg-cluster-rw
   port: 5432
   username: postgres
-  password: ""
-  database: sentry
+  password: "uvDLxAd8FBRMzuuV8KV2Q9hZheYpeVsB3UQsWjcrfq4gJiT7YBmZnpdVv5kjc35x"
+  database: app
 EOF
   ]
 }

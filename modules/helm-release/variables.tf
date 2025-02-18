@@ -40,7 +40,7 @@ variable "ingress_service_port" {
   default     = ""
 }
 variable "values_file" {
-  type        = string
+  type        = list(string)
   description = "Values.yaml"
   default     = []  
 }

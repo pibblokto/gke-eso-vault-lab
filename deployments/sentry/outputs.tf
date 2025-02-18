@@ -1,3 +1,3 @@
 output "release_metadata" {
-    value = module.cnpg_installation.release_metadata
+    value = module.sentry_installation.release_metadata
 }

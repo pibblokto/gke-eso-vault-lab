@@ -1,4 +1,4 @@
-module "cnpg_installation" {
+module "sentry_installation" {
     source               = "../../modules/helm-release"
     release_name         = local.release_name
     repository           = local.repository
