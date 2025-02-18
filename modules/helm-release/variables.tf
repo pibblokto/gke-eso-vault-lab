@@ -39,3 +39,8 @@ variable "ingress_service_port" {
   description = "Port of target service for ingress. Required if expose_release is true"
   default     = ""
 }
+variable "values_file" {
+  type        = list(string)
+  description = "Values.yaml"
+  default     = []  
+}

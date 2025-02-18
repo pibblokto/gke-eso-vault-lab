@@ -16,7 +16,7 @@ resource "kubernetes_manifest" "cnpg_cluster" {
     "kind"       = "Cluster"
     "metadata" = {
       "name"      = "pg-cluster"
-      "namespace" = "default"
+      "namespace" = "sentry"
     }
     "spec" = {
       "instances" = "3"

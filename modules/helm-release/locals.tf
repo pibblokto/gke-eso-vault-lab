@@ -8,4 +8,5 @@ locals {
     expose_release       = var.expose_release
     ingress_service_name = var.ingress_service_name
     ingress_service_port = var.ingress_service_port
+    values_file          = var.values_file
 }
