@@ -5,15 +5,9 @@ resource "helm_release" "this" {
   chart            = local.chart
   version          = local.chart_version != "" ? local.chart_version : null
   create_namespace = true
-  values           = local.values_file
 
-  dynamic "set" {
-    for_each = local.values
-    content {
-      name  = set.value["name"]
-      value = set.value["value"]
-    }
-  }
+  values = local.values_file
+  set    = local.values
 }
 resource "kubernetes_ingress_v1" "this" {
   count = local.expose_release ? 1 : 0

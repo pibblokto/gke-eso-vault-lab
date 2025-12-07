@@ -28,3 +28,8 @@ output type {
     sensitive   = false
     description = "Type of GKE cluster (regional/zonal)"
 }
+
+output "ca_certificate" {
+    value     = module.gke.ca_certificate
+    sensitive = true
+}
